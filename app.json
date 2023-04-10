@@ -1,0 +1,11 @@
+{
+  "name": "universal-haluk-gateway",
+
+  "buildpacks":
+          [
+            {
+              "url": "heroku/gradle"
+            }
+
+          ]
+}
