@@ -1,8 +1,11 @@
-package com.universal_yazilim.bid.ysm.gateway_app.security;
+package com.universal_yazilim.bid.ysm.gateway_app.security.utility;
 
+import com.universal_yazilim.bid.ysm.gateway_app.utility.Util;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,6 +24,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
+
+    // ******6 -> AbstractAuthenticationService
+    @Override
+    @Bean(BeanIds.AUTHENTICATION_MANAGER)
+    public AuthenticationManager authenticationManagerBean() throws Exception
+    {
+        try
+        {
+            return super.authenticationManagerBean();
+        }
+        catch (Exception e)
+        {
+            Util.createGeneralExceptionInfo(e);
+            return null;
+        }
+    }
 
     @Value("${service.security.secure-key-username}")
     private String secureKeyUsername;
