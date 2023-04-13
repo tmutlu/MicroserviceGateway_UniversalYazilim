@@ -26,7 +26,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// ******8 -> AuthenticationService'teki generateJWT() metodu tamamlanır.
+// ******8 generateToken() metodu ile kimliği doğrulanmış kullanıcı için (UserPrinciple tipinde)
+// JSON Web Token (JWT) oluşturulur.
+// -> AuthenticationService'teki generateJWT() metodu tamamlanır.
 @Component
 public class JWTProvider implements JWTProvidable
 {
@@ -37,7 +39,6 @@ public class JWTProvider implements JWTProvidable
     private final PublicKey publicKey;
 
     /*
-        // ***********2
         Java security icin ozel ve genel anahtar kodlayiciya ihtiyac var.
         ozel anahtar kodlama icin PKCS8EncodedKeySpec sinifini
         acik anahtar kodlama icin X509EncodedKeySpec sinifi
@@ -149,18 +150,18 @@ public class JWTProvider implements JWTProvidable
     // UserPrinciple nesneleri -> oturum acma isleminden sonra olusturulur.
     // Kimligi dogrulanmis kullanicilarin kimlik bilgilerini (credentials) ve rollerini icerir.
     @Override
-    public String generateToken(UserPrincipal authentication)
+    public String generateToken(UserPrincipal user)
     {
         // yetkililer tanimlandi
-        String authorities = authentication.getAuthorities()
+        String authorities = user.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining());
 
         // kullanici ad JWT nesnesinin ana tanimlayicisi olacak -> subject'i (setSubject())
         // talep metodu (claim())
-        return Jwts.builder().setSubject(authentication.getUsername())
-                .claim("id", authentication.getId())
+        return Jwts.builder().setSubject(user.getUsername())
+                .claim("id", user.getId())
                 .claim("roles", authorities)
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION_MS))
                 // burada bir algoritma ile imzaliyoruz using SHA-512 (min key length 2048 - o secildi basta)

@@ -3,12 +3,12 @@ package com.universal_yazilim.bid.ysm.gateway_app.controller;
 import com.google.gson.JsonElement;
 import com.universal_yazilim.bid.ysm.gateway_app.model.service.AbstractProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-// ödev - temel tanımlamalar
-// save(), deleteByID(), getAll()
+// ******11 -> AbstractProductService
 @RequestMapping("gateway/product")
 @RestController
 public class ProductController
@@ -19,13 +19,15 @@ public class ProductController
     @GetMapping
     public ResponseEntity<List<JsonElement>> getAll()
     {
-        return null;
+        return ResponseEntity.ok(productService.getAll());
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity deleteByID(@PathVariable(name = "id") Integer productID)
     {
-        return null;
+        productService.deleteByID(productID);
+
+        return new ResponseEntity("Product(product ID:" + productID + ") is deleted.", HttpStatus.OK);
     }
 
     /*
@@ -35,6 +37,6 @@ public class ProductController
     @PostMapping
     public ResponseEntity save(@RequestBody JsonElement product)
     {
-        return null;
+        return ResponseEntity.ok(productService.save(product));
     }
 }

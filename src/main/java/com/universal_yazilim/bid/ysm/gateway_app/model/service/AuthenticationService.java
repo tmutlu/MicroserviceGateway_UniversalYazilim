@@ -14,9 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationService extends AbstractAuthenticationService
 {
-    // ******9
-
-
+    // ******9 -> AuthenticationController tamamlandı.
     @Override
     public String generateJWT(User user)
     {

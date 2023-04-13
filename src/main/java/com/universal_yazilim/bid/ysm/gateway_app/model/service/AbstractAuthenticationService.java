@@ -8,7 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 
 public abstract class AbstractAuthenticationService
 {
-    // ******7 -> JWTProvidable implementasyonu JWTProvider tanımlanır.
+    // ******7 JWTProvidable ve -> implementasyonu JWTProvider tanımlanır.
     @Autowired
     protected JWTProvidable jwtProvider;
 
