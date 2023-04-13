@@ -40,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     @Value("${service.security.secure-key-password}")
     private String secureKeyPassword;
 
+    // ******22
     /*
         kaynaklar arası paylaşım için:
         CORS (cross origin resource sharing) politikasi
